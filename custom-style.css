@@ -6,6 +6,22 @@
    block elsewhere in index.html.
    ========================================================================== */
 
+/* ---------- Header / nav bar ---------- */
+
+/* The theme sets the header's horizontal padding via
+   --wp--style--root--padding-right / --padding-left, which are both 0 on
+   this site (see the "--wp--style--root--padding-*: 0px" declarations in
+   the global-styles-inline-css block). That leaves the nav row's content
+   (in particular "Kontakt", the last link) flush against the browser edge.
+   Overriding it here so the nav row gets breathing room on both sides,
+   matching the horizontal padding used by the page sections below. The
+   inline style set by WordPress has higher specificity than a plain class
+   selector, so !important is needed to win over it. */
+header.wp-block-template-part .alignfull.has-global-padding {
+	padding-right: clamp(1.5rem, 5vw, 4rem) !important;
+	padding-left: clamp(1.5rem, 5vw, 4rem) !important;
+}
+
 /* ---------- Hero / parallax section ---------- */
 
 .landing-content {
@@ -28,10 +44,20 @@
 .parallax-container {
 	width: 100%;
 	overflow: hidden;
+	/* Leave a strip of the page background below the photo, the same size as
+	   the header's own top/bottom padding (--wp--preset--spacing--30), so the
+	   hero doesn't run flush to the very bottom of the screen. */
+	margin-bottom: var(--wp--preset--spacing--30);
 }
 
 .parallax {
-	min-height: 78vh;
+	/* Fill the viewport on the initial landing view (so "Om mig" doesn't peek
+	   in below the fold), minus the actual header height — measured in JS and
+	   exposed as --site-header-height, since the header isn't a fixed height
+	   we can hardcode — and minus the bottom pad above, so header pad + hero
+	   + bottom pad line up to fill exactly one screen. */
+	min-height: calc(100vh - var(--site-header-height, 0px) - var(--wp--preset--spacing--30));
+	min-height: calc(100svh - var(--site-header-height, 0px) - var(--wp--preset--spacing--30));
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -251,7 +277,7 @@
 
 #kontakt .grunion-field-label {
 	display: block;
-	font-family: var(--wp--preset--font-family--literata);
+	font-family: var(--wp--preset--font-family--eb-garamond);
 	font-weight: 700;
 	margin-bottom: 0.5rem;
 }

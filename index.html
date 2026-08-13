@@ -91,6 +91,21 @@ document.addEventListener('DOMContentLoaded', function () {
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') closeMobileMenu();
   });
+
+  // Measure the actual rendered header height and expose it as a CSS
+  // custom property, so the hero section's height (set in custom-style.css)
+  // can subtract exactly this much instead of guessing a fixed number of
+  // pixels/rem that would drift if the header's content or padding ever
+  // changes.
+  var siteHeader = document.querySelector('header.wp-block-template-part');
+
+  function updateHeaderHeightVar() {
+    if (!siteHeader) return;
+    document.documentElement.style.setProperty('--site-header-height', siteHeader.offsetHeight + 'px');
+  }
+
+  updateHeaderHeightVar();
+  window.addEventListener('resize', updateHeaderHeightVar);
 });
 </script>
 
@@ -423,42 +438,19 @@ var JETPACK_MU_WPCOM_SETTINGS = {"assetsUrl":"https://s1.wp.com/wp-content/mu-pl
 <script type="module" src="wp-content/mu-plugins/jetpack-plugin/moon/jetpack_vendor/automattic/jetpack-forms/dist/modules/form/view.js%3Fm=1765895303i&amp;ver=15.4-a.6" id="jp-forms-view-js-module"></script>
 <link rel="modulepreload" href="https://s1.wp.com/wp-content/plugins/gutenberg-core/v22.2.0/build/modules/interactivity/index.min.js?m=1764855221i&#038;ver=1764773745501" id="@wordpress/interactivity-js-modulepreload" data-wp-fetchpriority="low">
 <meta name="description" content="Ariel Gonzalez – Psykodynamisk terapi i Göteborg" />
-<style class='wp-fonts-local'>
-@font-face{font-family:"EB Garamond";font-style:normal;font-weight:400;font-display:swap;src:url('https://fonts.wp.com/s/ebgaramond/v27/SlGDmQSNjdsmc35JDF1K5E55YMjF_7DPuGi-6_RUBoV-e6yHgQ.woff2') format('woff2');}
-@font-face{font-family:"EB Garamond";font-style:normal;font-weight:500;font-display:swap;src:url('https://fonts.wp.com/s/ebgaramond/v27/SlGDmQSNjdsmc35JDF1K5E55YMjF_7DPuGi-2fRUBoV-e6yHgQ.woff2') format('woff2');}
-@font-face{font-family:"EB Garamond";font-style:normal;font-weight:600;font-display:swap;src:url('https://fonts.wp.com/s/ebgaramond/v27/SlGDmQSNjdsmc35JDF1K5E55YMjF_7DPuGi-NfNUBoV-e6yHgQ.woff2') format('woff2');}
-@font-face{font-family:"EB Garamond";font-style:normal;font-weight:700;font-display:swap;src:url('https://fonts.wp.com/s/ebgaramond/v27/SlGDmQSNjdsmc35JDF1K5E55YMjF_7DPuGi-DPNUBoV-e6yHgQ.woff2') format('woff2');}
-@font-face{font-family:"EB Garamond";font-style:normal;font-weight:800;font-display:swap;src:url('https://fonts.wp.com/s/ebgaramond/v27/SlGDmQSNjdsmc35JDF1K5E55YMjF_7DPuGi-a_NUBoV-e6yHgQ.woff2') format('woff2');}
-@font-face{font-family:"EB Garamond";font-style:italic;font-weight:400;font-display:swap;src:url('https://fonts.wp.com/s/ebgaramond/v27/SlGFmQSNjdsmc35JDF1K5GRwUjcdlttVFm-rI7e8QI9_WamXgXFI.woff2') format('woff2');}
-@font-face{font-family:"EB Garamond";font-style:italic;font-weight:500;font-display:swap;src:url('https://fonts.wp.com/s/ebgaramond/v27/SlGFmQSNjdsmc35JDF1K5GRwUjcdlttVFm-rI7eOQI9_WamXgXFI.woff2') format('woff2');}
-@font-face{font-family:"EB Garamond";font-style:italic;font-weight:600;font-display:swap;src:url('https://fonts.wp.com/s/ebgaramond/v27/SlGFmQSNjdsmc35JDF1K5GRwUjcdlttVFm-rI7diR49_WamXgXFI.woff2') format('woff2');}
-@font-face{font-family:"EB Garamond";font-style:italic;font-weight:700;font-display:swap;src:url('https://fonts.wp.com/s/ebgaramond/v27/SlGFmQSNjdsmc35JDF1K5GRwUjcdlttVFm-rI7dbR49_WamXgXFI.woff2') format('woff2');}
-@font-face{font-family:"EB Garamond";font-style:italic;font-weight:800;font-display:swap;src:url('https://fonts.wp.com/s/ebgaramond/v27/SlGFmQSNjdsmc35JDF1K5GRwUjcdlttVFm-rI7c8R49_WamXgXFI.woff2') format('woff2');}
-@font-face{font-family:Literata;font-style:normal;font-weight:200;font-display:swap;src:url('https://fonts.wp.com/s/literata/v35/or3PQ6P12-iJxAIgLa78DkrbXsDgk0oVDaDPYLanFLHpPf2TbJG_F_PcTWCWp8g.woff2') format('woff2');}
-@font-face{font-family:Literata;font-style:normal;font-weight:300;font-display:swap;src:url('https://fonts.wp.com/s/literata/v35/or3PQ6P12-iJxAIgLa78DkrbXsDgk0oVDaDPYLanFLHpPf2TbE-_F_PcTWCWp8g.woff2') format('woff2');}
-@font-face{font-family:Literata;font-style:normal;font-weight:400;font-display:swap;src:url('https://fonts.wp.com/s/literata/v35/or3PQ6P12-iJxAIgLa78DkrbXsDgk0oVDaDPYLanFLHpPf2TbBG_F_PcTWCWp8g.woff2') format('woff2');}
-@font-face{font-family:Literata;font-style:normal;font-weight:500;font-display:swap;src:url('https://fonts.wp.com/s/literata/v35/or3PQ6P12-iJxAIgLa78DkrbXsDgk0oVDaDPYLanFLHpPf2TbCO_F_PcTWCWp8g.woff2') format('woff2');}
-@font-face{font-family:Literata;font-style:normal;font-weight:600;font-display:swap;src:url('https://fonts.wp.com/s/literata/v35/or3PQ6P12-iJxAIgLa78DkrbXsDgk0oVDaDPYLanFLHpPf2TbM-4F_PcTWCWp8g.woff2') format('woff2');}
-@font-face{font-family:Literata;font-style:normal;font-weight:700;font-display:swap;src:url('https://fonts.wp.com/s/literata/v35/or3PQ6P12-iJxAIgLa78DkrbXsDgk0oVDaDPYLanFLHpPf2TbPa4F_PcTWCWp8g.woff2') format('woff2');}
-@font-face{font-family:Literata;font-style:normal;font-weight:800;font-display:swap;src:url('https://fonts.wp.com/s/literata/v35/or3PQ6P12-iJxAIgLa78DkrbXsDgk0oVDaDPYLanFLHpPf2TbJG4F_PcTWCWp8g.woff2') format('woff2');}
-@font-face{font-family:Literata;font-style:normal;font-weight:900;font-display:swap;src:url('https://fonts.wp.com/s/literata/v35/or3PQ6P12-iJxAIgLa78DkrbXsDgk0oVDaDPYLanFLHpPf2TbLi4F_PcTWCWp8g.woff2') format('woff2');}
-@font-face{font-family:Literata;font-style:italic;font-weight:200;font-display:swap;src:url('https://fonts.wp.com/s/literata/v35/or3NQ6P12-iJxAIgLYT1PLs1Zd0nfUwAbeGVKoRYzNiCp1OUedn8f7XWTEKTt8iVow.woff2') format('woff2');}
-@font-face{font-family:Literata;font-style:italic;font-weight:300;font-display:swap;src:url('https://fonts.wp.com/s/literata/v35/or3NQ6P12-iJxAIgLYT1PLs1Zd0nfUwAbeGVKoRYzNiCp1OUedn8obXWTEKTt8iVow.woff2') format('woff2');}
-@font-face{font-family:Literata;font-style:italic;font-weight:400;font-display:swap;src:url('https://fonts.wp.com/s/literata/v35/or3NQ6P12-iJxAIgLYT1PLs1Zd0nfUwAbeGVKoRYzNiCp1OUedn8_7XWTEKTt8iVow.woff2') format('woff2');}
-@font-face{font-family:Literata;font-style:italic;font-weight:500;font-display:swap;src:url('https://fonts.wp.com/s/literata/v35/or3NQ6P12-iJxAIgLYT1PLs1Zd0nfUwAbeGVKoRYzNiCp1OUedn8zbXWTEKTt8iVow.woff2') format('woff2');}
-@font-face{font-family:Literata;font-style:italic;font-weight:600;font-display:swap;src:url('https://fonts.wp.com/s/literata/v35/or3NQ6P12-iJxAIgLYT1PLs1Zd0nfUwAbeGVKoRYzNiCp1OUedn8IbLWTEKTt8iVow.woff2') format('woff2');}
-@font-face{font-family:Literata;font-style:italic;font-weight:700;font-display:swap;src:url('https://fonts.wp.com/s/literata/v35/or3NQ6P12-iJxAIgLYT1PLs1Zd0nfUwAbeGVKoRYzNiCp1OUedn8GLLWTEKTt8iVow.woff2') format('woff2');}
-@font-face{font-family:Literata;font-style:italic;font-weight:800;font-display:swap;src:url('https://fonts.wp.com/s/literata/v35/or3NQ6P12-iJxAIgLYT1PLs1Zd0nfUwAbeGVKoRYzNiCp1OUedn8f7LWTEKTt8iVow.woff2') format('woff2');}
-@font-face{font-family:Literata;font-style:italic;font-weight:900;font-display:swap;src:url('https://fonts.wp.com/s/literata/v35/or3NQ6P12-iJxAIgLYT1PLs1Zd0nfUwAbeGVKoRYzNiCp1OUedn8VrLWTEKTt8iVow.woff2') format('woff2');}
-@font-face{font-family:Lora;font-style:normal;font-weight:400;font-display:swap;src:url('https://fonts.wp.com/s/lora/v32/0QI6MX1D_JOuGQbT0gvTJPa787weuyJDmKxemMeZ.woff2') format('woff2');}
-@font-face{font-family:Lora;font-style:normal;font-weight:500;font-display:swap;src:url('https://fonts.wp.com/s/lora/v32/0QI6MX1D_JOuGQbT0gvTJPa787wsuyJDmKxemMeZ.woff2') format('woff2');}
-@font-face{font-family:Lora;font-style:normal;font-weight:600;font-display:swap;src:url('https://fonts.wp.com/s/lora/v32/0QI6MX1D_JOuGQbT0gvTJPa787zAvCJDmKxemMeZ.woff2') format('woff2');}
-@font-face{font-family:Lora;font-style:normal;font-weight:700;font-display:swap;src:url('https://fonts.wp.com/s/lora/v32/0QI6MX1D_JOuGQbT0gvTJPa787z5vCJDmKxemMeZ.woff2') format('woff2');}
-@font-face{font-family:Lora;font-style:italic;font-weight:400;font-display:swap;src:url('https://fonts.wp.com/s/lora/v32/0QI8MX1D_JOuMw_hLdO6T2wV9KnW-MoFkq18ndeZzZ0.woff2') format('woff2');}
-@font-face{font-family:Lora;font-style:italic;font-weight:500;font-display:swap;src:url('https://fonts.wp.com/s/lora/v32/0QI8MX1D_JOuMw_hLdO6T2wV9KnW-PgFkq18ndeZzZ0.woff2') format('woff2');}
-@font-face{font-family:Lora;font-style:italic;font-weight:600;font-display:swap;src:url('https://fonts.wp.com/s/lora/v32/0QI8MX1D_JOuMw_hLdO6T2wV9KnW-BQCkq18ndeZzZ0.woff2') format('woff2');}
-@font-face{font-family:Lora;font-style:italic;font-weight:700;font-display:swap;src:url('https://fonts.wp.com/s/lora/v32/0QI8MX1D_JOuMw_hLdO6T2wV9KnW-C0Ckq18ndeZzZ0.woff2') format('woff2');}
-</style>
+<!-- Web fonts: only EB Garamond and Lora, loaded directly from Google Fonts
+     instead of WordPress.com's font CDN (fonts.wp.com). That CDN is scoped
+     to WordPress.com-hosted sites; now that this page is served from
+     gonzalezpsykoterapi.se via GitHub Pages, those font file requests can be
+     silently rejected, leaving text (like "leg. psykolog") to fall back to a
+     generic serif that merely looks similar to the intended font. Google
+     Fonts serves these same open-source families with no such restriction.
+     Literata was dropped from this list (and everything that referenced it
+     falls back to a plain serif) to cut down on moving parts while we track
+     down the font bug. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
 
 <style>
 	/* Force button styling */

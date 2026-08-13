@@ -13,6 +13,87 @@
   gtag('config', 'G-YB54HN2DEX');
 </script>
 
+<!-- Custom event tracking: contact form submissions, CTA clicks, and in-page nav clicks -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  // Contact form submission (conversion event)
+  var contactForm = document.querySelector('#kontakt form.contact-form');
+  if (contactForm) {
+    contactForm.addEventListener('submit', function () {
+      if (typeof gtag === 'function') {
+        gtag('event', 'contact_form_submit', {
+          event_category: 'engagement',
+          event_label: 'Kontaktformulär'
+        });
+      }
+    });
+  }
+
+  // CTA / button clicks (e.g. the "Skicka" send button, and any future buttons)
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest('.wp-block-button__link');
+    if (btn && typeof gtag === 'function') {
+      gtag('event', 'cta_click', {
+        event_category: 'engagement',
+        event_label: btn.textContent.trim()
+      });
+    }
+  });
+
+  // In-page section navigation clicks (Om mig / Psykoterapi / Kontakt)
+  document.querySelectorAll('.wp-block-navigation-item__content').forEach(function (link) {
+    link.addEventListener('click', function () {
+      if (typeof gtag === 'function') {
+        gtag('event', 'nav_click', {
+          event_category: 'engagement',
+          event_label: link.textContent.trim()
+        });
+      }
+    });
+    // Close the mobile menu after following a link (see mobile menu fallback below).
+    link.addEventListener('click', function () {
+      closeMobileMenu();
+    });
+  });
+
+  // Plain-JS mobile menu fallback. The nav markup is built for WordPress's
+  // Interactivity API (data-wp-on--click etc.), which needs its JS module to
+  // load successfully to work. That module can fail silently in some
+  // contexts (e.g. viewing this file locally via file://), leaving the
+  // hamburger button dead. This listens on the same buttons and toggles the
+  // same "is-menu-open" / "has-modal-open" classes the site's own CSS
+  // already expects, so the menu works regardless of whether that module
+  // loaded.
+  var menuContainer = document.getElementById('modal-1');
+  var menuOpenBtn = document.querySelector('.wp-block-navigation__responsive-container-open');
+  var menuCloseBtn = document.querySelector('.wp-block-navigation__responsive-container-close');
+
+  function openMobileMenu() {
+    if (!menuContainer) return;
+    menuContainer.classList.add('is-menu-open', 'has-modal-open');
+    document.documentElement.classList.add('has-modal-open');
+    if (menuOpenBtn) menuOpenBtn.setAttribute('aria-expanded', 'true');
+  }
+
+  function closeMobileMenu() {
+    if (!menuContainer) return;
+    menuContainer.classList.remove('is-menu-open', 'has-modal-open');
+    document.documentElement.classList.remove('has-modal-open');
+    if (menuOpenBtn) menuOpenBtn.setAttribute('aria-expanded', 'false');
+  }
+
+  if (menuOpenBtn) {
+    menuOpenBtn.addEventListener('click', openMobileMenu);
+  }
+  if (menuCloseBtn) {
+    menuCloseBtn.addEventListener('click', closeMobileMenu);
+  }
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeMobileMenu();
+  });
+});
+</script>
+
 
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -343,40 +424,40 @@ var JETPACK_MU_WPCOM_SETTINGS = {"assetsUrl":"https://s1.wp.com/wp-content/mu-pl
 <link rel="modulepreload" href="https://s1.wp.com/wp-content/plugins/gutenberg-core/v22.2.0/build/modules/interactivity/index.min.js?m=1764855221i&#038;ver=1764773745501" id="@wordpress/interactivity-js-modulepreload" data-wp-fetchpriority="low">
 <meta name="description" content="Ariel Gonzalez – Psykodynamisk terapi i Göteborg" />
 <style class='wp-fonts-local'>
-@font-face{font-family:"EB Garamond";font-style:normal;font-weight:400;font-display:fallback;src:url('https://fonts.wp.com/s/ebgaramond/v27/SlGDmQSNjdsmc35JDF1K5E55YMjF_7DPuGi-6_RUBoV-e6yHgQ.woff2') format('woff2');}
-@font-face{font-family:"EB Garamond";font-style:normal;font-weight:500;font-display:fallback;src:url('https://fonts.wp.com/s/ebgaramond/v27/SlGDmQSNjdsmc35JDF1K5E55YMjF_7DPuGi-2fRUBoV-e6yHgQ.woff2') format('woff2');}
-@font-face{font-family:"EB Garamond";font-style:normal;font-weight:600;font-display:fallback;src:url('https://fonts.wp.com/s/ebgaramond/v27/SlGDmQSNjdsmc35JDF1K5E55YMjF_7DPuGi-NfNUBoV-e6yHgQ.woff2') format('woff2');}
-@font-face{font-family:"EB Garamond";font-style:normal;font-weight:700;font-display:fallback;src:url('https://fonts.wp.com/s/ebgaramond/v27/SlGDmQSNjdsmc35JDF1K5E55YMjF_7DPuGi-DPNUBoV-e6yHgQ.woff2') format('woff2');}
-@font-face{font-family:"EB Garamond";font-style:normal;font-weight:800;font-display:fallback;src:url('https://fonts.wp.com/s/ebgaramond/v27/SlGDmQSNjdsmc35JDF1K5E55YMjF_7DPuGi-a_NUBoV-e6yHgQ.woff2') format('woff2');}
-@font-face{font-family:"EB Garamond";font-style:italic;font-weight:400;font-display:fallback;src:url('https://fonts.wp.com/s/ebgaramond/v27/SlGFmQSNjdsmc35JDF1K5GRwUjcdlttVFm-rI7e8QI9_WamXgXFI.woff2') format('woff2');}
-@font-face{font-family:"EB Garamond";font-style:italic;font-weight:500;font-display:fallback;src:url('https://fonts.wp.com/s/ebgaramond/v27/SlGFmQSNjdsmc35JDF1K5GRwUjcdlttVFm-rI7eOQI9_WamXgXFI.woff2') format('woff2');}
-@font-face{font-family:"EB Garamond";font-style:italic;font-weight:600;font-display:fallback;src:url('https://fonts.wp.com/s/ebgaramond/v27/SlGFmQSNjdsmc35JDF1K5GRwUjcdlttVFm-rI7diR49_WamXgXFI.woff2') format('woff2');}
-@font-face{font-family:"EB Garamond";font-style:italic;font-weight:700;font-display:fallback;src:url('https://fonts.wp.com/s/ebgaramond/v27/SlGFmQSNjdsmc35JDF1K5GRwUjcdlttVFm-rI7dbR49_WamXgXFI.woff2') format('woff2');}
-@font-face{font-family:"EB Garamond";font-style:italic;font-weight:800;font-display:fallback;src:url('https://fonts.wp.com/s/ebgaramond/v27/SlGFmQSNjdsmc35JDF1K5GRwUjcdlttVFm-rI7c8R49_WamXgXFI.woff2') format('woff2');}
-@font-face{font-family:Literata;font-style:normal;font-weight:200;font-display:fallback;src:url('https://fonts.wp.com/s/literata/v35/or3PQ6P12-iJxAIgLa78DkrbXsDgk0oVDaDPYLanFLHpPf2TbJG_F_PcTWCWp8g.woff2') format('woff2');}
-@font-face{font-family:Literata;font-style:normal;font-weight:300;font-display:fallback;src:url('https://fonts.wp.com/s/literata/v35/or3PQ6P12-iJxAIgLa78DkrbXsDgk0oVDaDPYLanFLHpPf2TbE-_F_PcTWCWp8g.woff2') format('woff2');}
-@font-face{font-family:Literata;font-style:normal;font-weight:400;font-display:fallback;src:url('https://fonts.wp.com/s/literata/v35/or3PQ6P12-iJxAIgLa78DkrbXsDgk0oVDaDPYLanFLHpPf2TbBG_F_PcTWCWp8g.woff2') format('woff2');}
-@font-face{font-family:Literata;font-style:normal;font-weight:500;font-display:fallback;src:url('https://fonts.wp.com/s/literata/v35/or3PQ6P12-iJxAIgLa78DkrbXsDgk0oVDaDPYLanFLHpPf2TbCO_F_PcTWCWp8g.woff2') format('woff2');}
-@font-face{font-family:Literata;font-style:normal;font-weight:600;font-display:fallback;src:url('https://fonts.wp.com/s/literata/v35/or3PQ6P12-iJxAIgLa78DkrbXsDgk0oVDaDPYLanFLHpPf2TbM-4F_PcTWCWp8g.woff2') format('woff2');}
-@font-face{font-family:Literata;font-style:normal;font-weight:700;font-display:fallback;src:url('https://fonts.wp.com/s/literata/v35/or3PQ6P12-iJxAIgLa78DkrbXsDgk0oVDaDPYLanFLHpPf2TbPa4F_PcTWCWp8g.woff2') format('woff2');}
-@font-face{font-family:Literata;font-style:normal;font-weight:800;font-display:fallback;src:url('https://fonts.wp.com/s/literata/v35/or3PQ6P12-iJxAIgLa78DkrbXsDgk0oVDaDPYLanFLHpPf2TbJG4F_PcTWCWp8g.woff2') format('woff2');}
-@font-face{font-family:Literata;font-style:normal;font-weight:900;font-display:fallback;src:url('https://fonts.wp.com/s/literata/v35/or3PQ6P12-iJxAIgLa78DkrbXsDgk0oVDaDPYLanFLHpPf2TbLi4F_PcTWCWp8g.woff2') format('woff2');}
-@font-face{font-family:Literata;font-style:italic;font-weight:200;font-display:fallback;src:url('https://fonts.wp.com/s/literata/v35/or3NQ6P12-iJxAIgLYT1PLs1Zd0nfUwAbeGVKoRYzNiCp1OUedn8f7XWTEKTt8iVow.woff2') format('woff2');}
-@font-face{font-family:Literata;font-style:italic;font-weight:300;font-display:fallback;src:url('https://fonts.wp.com/s/literata/v35/or3NQ6P12-iJxAIgLYT1PLs1Zd0nfUwAbeGVKoRYzNiCp1OUedn8obXWTEKTt8iVow.woff2') format('woff2');}
-@font-face{font-family:Literata;font-style:italic;font-weight:400;font-display:fallback;src:url('https://fonts.wp.com/s/literata/v35/or3NQ6P12-iJxAIgLYT1PLs1Zd0nfUwAbeGVKoRYzNiCp1OUedn8_7XWTEKTt8iVow.woff2') format('woff2');}
-@font-face{font-family:Literata;font-style:italic;font-weight:500;font-display:fallback;src:url('https://fonts.wp.com/s/literata/v35/or3NQ6P12-iJxAIgLYT1PLs1Zd0nfUwAbeGVKoRYzNiCp1OUedn8zbXWTEKTt8iVow.woff2') format('woff2');}
-@font-face{font-family:Literata;font-style:italic;font-weight:600;font-display:fallback;src:url('https://fonts.wp.com/s/literata/v35/or3NQ6P12-iJxAIgLYT1PLs1Zd0nfUwAbeGVKoRYzNiCp1OUedn8IbLWTEKTt8iVow.woff2') format('woff2');}
-@font-face{font-family:Literata;font-style:italic;font-weight:700;font-display:fallback;src:url('https://fonts.wp.com/s/literata/v35/or3NQ6P12-iJxAIgLYT1PLs1Zd0nfUwAbeGVKoRYzNiCp1OUedn8GLLWTEKTt8iVow.woff2') format('woff2');}
-@font-face{font-family:Literata;font-style:italic;font-weight:800;font-display:fallback;src:url('https://fonts.wp.com/s/literata/v35/or3NQ6P12-iJxAIgLYT1PLs1Zd0nfUwAbeGVKoRYzNiCp1OUedn8f7LWTEKTt8iVow.woff2') format('woff2');}
-@font-face{font-family:Literata;font-style:italic;font-weight:900;font-display:fallback;src:url('https://fonts.wp.com/s/literata/v35/or3NQ6P12-iJxAIgLYT1PLs1Zd0nfUwAbeGVKoRYzNiCp1OUedn8VrLWTEKTt8iVow.woff2') format('woff2');}
-@font-face{font-family:Lora;font-style:normal;font-weight:400;font-display:fallback;src:url('https://fonts.wp.com/s/lora/v32/0QI6MX1D_JOuGQbT0gvTJPa787weuyJDmKxemMeZ.woff2') format('woff2');}
-@font-face{font-family:Lora;font-style:normal;font-weight:500;font-display:fallback;src:url('https://fonts.wp.com/s/lora/v32/0QI6MX1D_JOuGQbT0gvTJPa787wsuyJDmKxemMeZ.woff2') format('woff2');}
-@font-face{font-family:Lora;font-style:normal;font-weight:600;font-display:fallback;src:url('https://fonts.wp.com/s/lora/v32/0QI6MX1D_JOuGQbT0gvTJPa787zAvCJDmKxemMeZ.woff2') format('woff2');}
-@font-face{font-family:Lora;font-style:normal;font-weight:700;font-display:fallback;src:url('https://fonts.wp.com/s/lora/v32/0QI6MX1D_JOuGQbT0gvTJPa787z5vCJDmKxemMeZ.woff2') format('woff2');}
-@font-face{font-family:Lora;font-style:italic;font-weight:400;font-display:fallback;src:url('https://fonts.wp.com/s/lora/v32/0QI8MX1D_JOuMw_hLdO6T2wV9KnW-MoFkq18ndeZzZ0.woff2') format('woff2');}
-@font-face{font-family:Lora;font-style:italic;font-weight:500;font-display:fallback;src:url('https://fonts.wp.com/s/lora/v32/0QI8MX1D_JOuMw_hLdO6T2wV9KnW-PgFkq18ndeZzZ0.woff2') format('woff2');}
-@font-face{font-family:Lora;font-style:italic;font-weight:600;font-display:fallback;src:url('https://fonts.wp.com/s/lora/v32/0QI8MX1D_JOuMw_hLdO6T2wV9KnW-BQCkq18ndeZzZ0.woff2') format('woff2');}
-@font-face{font-family:Lora;font-style:italic;font-weight:700;font-display:fallback;src:url('https://fonts.wp.com/s/lora/v32/0QI8MX1D_JOuMw_hLdO6T2wV9KnW-C0Ckq18ndeZzZ0.woff2') format('woff2');}
+@font-face{font-family:"EB Garamond";font-style:normal;font-weight:400;font-display:swap;src:url('https://fonts.wp.com/s/ebgaramond/v27/SlGDmQSNjdsmc35JDF1K5E55YMjF_7DPuGi-6_RUBoV-e6yHgQ.woff2') format('woff2');}
+@font-face{font-family:"EB Garamond";font-style:normal;font-weight:500;font-display:swap;src:url('https://fonts.wp.com/s/ebgaramond/v27/SlGDmQSNjdsmc35JDF1K5E55YMjF_7DPuGi-2fRUBoV-e6yHgQ.woff2') format('woff2');}
+@font-face{font-family:"EB Garamond";font-style:normal;font-weight:600;font-display:swap;src:url('https://fonts.wp.com/s/ebgaramond/v27/SlGDmQSNjdsmc35JDF1K5E55YMjF_7DPuGi-NfNUBoV-e6yHgQ.woff2') format('woff2');}
+@font-face{font-family:"EB Garamond";font-style:normal;font-weight:700;font-display:swap;src:url('https://fonts.wp.com/s/ebgaramond/v27/SlGDmQSNjdsmc35JDF1K5E55YMjF_7DPuGi-DPNUBoV-e6yHgQ.woff2') format('woff2');}
+@font-face{font-family:"EB Garamond";font-style:normal;font-weight:800;font-display:swap;src:url('https://fonts.wp.com/s/ebgaramond/v27/SlGDmQSNjdsmc35JDF1K5E55YMjF_7DPuGi-a_NUBoV-e6yHgQ.woff2') format('woff2');}
+@font-face{font-family:"EB Garamond";font-style:italic;font-weight:400;font-display:swap;src:url('https://fonts.wp.com/s/ebgaramond/v27/SlGFmQSNjdsmc35JDF1K5GRwUjcdlttVFm-rI7e8QI9_WamXgXFI.woff2') format('woff2');}
+@font-face{font-family:"EB Garamond";font-style:italic;font-weight:500;font-display:swap;src:url('https://fonts.wp.com/s/ebgaramond/v27/SlGFmQSNjdsmc35JDF1K5GRwUjcdlttVFm-rI7eOQI9_WamXgXFI.woff2') format('woff2');}
+@font-face{font-family:"EB Garamond";font-style:italic;font-weight:600;font-display:swap;src:url('https://fonts.wp.com/s/ebgaramond/v27/SlGFmQSNjdsmc35JDF1K5GRwUjcdlttVFm-rI7diR49_WamXgXFI.woff2') format('woff2');}
+@font-face{font-family:"EB Garamond";font-style:italic;font-weight:700;font-display:swap;src:url('https://fonts.wp.com/s/ebgaramond/v27/SlGFmQSNjdsmc35JDF1K5GRwUjcdlttVFm-rI7dbR49_WamXgXFI.woff2') format('woff2');}
+@font-face{font-family:"EB Garamond";font-style:italic;font-weight:800;font-display:swap;src:url('https://fonts.wp.com/s/ebgaramond/v27/SlGFmQSNjdsmc35JDF1K5GRwUjcdlttVFm-rI7c8R49_WamXgXFI.woff2') format('woff2');}
+@font-face{font-family:Literata;font-style:normal;font-weight:200;font-display:swap;src:url('https://fonts.wp.com/s/literata/v35/or3PQ6P12-iJxAIgLa78DkrbXsDgk0oVDaDPYLanFLHpPf2TbJG_F_PcTWCWp8g.woff2') format('woff2');}
+@font-face{font-family:Literata;font-style:normal;font-weight:300;font-display:swap;src:url('https://fonts.wp.com/s/literata/v35/or3PQ6P12-iJxAIgLa78DkrbXsDgk0oVDaDPYLanFLHpPf2TbE-_F_PcTWCWp8g.woff2') format('woff2');}
+@font-face{font-family:Literata;font-style:normal;font-weight:400;font-display:swap;src:url('https://fonts.wp.com/s/literata/v35/or3PQ6P12-iJxAIgLa78DkrbXsDgk0oVDaDPYLanFLHpPf2TbBG_F_PcTWCWp8g.woff2') format('woff2');}
+@font-face{font-family:Literata;font-style:normal;font-weight:500;font-display:swap;src:url('https://fonts.wp.com/s/literata/v35/or3PQ6P12-iJxAIgLa78DkrbXsDgk0oVDaDPYLanFLHpPf2TbCO_F_PcTWCWp8g.woff2') format('woff2');}
+@font-face{font-family:Literata;font-style:normal;font-weight:600;font-display:swap;src:url('https://fonts.wp.com/s/literata/v35/or3PQ6P12-iJxAIgLa78DkrbXsDgk0oVDaDPYLanFLHpPf2TbM-4F_PcTWCWp8g.woff2') format('woff2');}
+@font-face{font-family:Literata;font-style:normal;font-weight:700;font-display:swap;src:url('https://fonts.wp.com/s/literata/v35/or3PQ6P12-iJxAIgLa78DkrbXsDgk0oVDaDPYLanFLHpPf2TbPa4F_PcTWCWp8g.woff2') format('woff2');}
+@font-face{font-family:Literata;font-style:normal;font-weight:800;font-display:swap;src:url('https://fonts.wp.com/s/literata/v35/or3PQ6P12-iJxAIgLa78DkrbXsDgk0oVDaDPYLanFLHpPf2TbJG4F_PcTWCWp8g.woff2') format('woff2');}
+@font-face{font-family:Literata;font-style:normal;font-weight:900;font-display:swap;src:url('https://fonts.wp.com/s/literata/v35/or3PQ6P12-iJxAIgLa78DkrbXsDgk0oVDaDPYLanFLHpPf2TbLi4F_PcTWCWp8g.woff2') format('woff2');}
+@font-face{font-family:Literata;font-style:italic;font-weight:200;font-display:swap;src:url('https://fonts.wp.com/s/literata/v35/or3NQ6P12-iJxAIgLYT1PLs1Zd0nfUwAbeGVKoRYzNiCp1OUedn8f7XWTEKTt8iVow.woff2') format('woff2');}
+@font-face{font-family:Literata;font-style:italic;font-weight:300;font-display:swap;src:url('https://fonts.wp.com/s/literata/v35/or3NQ6P12-iJxAIgLYT1PLs1Zd0nfUwAbeGVKoRYzNiCp1OUedn8obXWTEKTt8iVow.woff2') format('woff2');}
+@font-face{font-family:Literata;font-style:italic;font-weight:400;font-display:swap;src:url('https://fonts.wp.com/s/literata/v35/or3NQ6P12-iJxAIgLYT1PLs1Zd0nfUwAbeGVKoRYzNiCp1OUedn8_7XWTEKTt8iVow.woff2') format('woff2');}
+@font-face{font-family:Literata;font-style:italic;font-weight:500;font-display:swap;src:url('https://fonts.wp.com/s/literata/v35/or3NQ6P12-iJxAIgLYT1PLs1Zd0nfUwAbeGVKoRYzNiCp1OUedn8zbXWTEKTt8iVow.woff2') format('woff2');}
+@font-face{font-family:Literata;font-style:italic;font-weight:600;font-display:swap;src:url('https://fonts.wp.com/s/literata/v35/or3NQ6P12-iJxAIgLYT1PLs1Zd0nfUwAbeGVKoRYzNiCp1OUedn8IbLWTEKTt8iVow.woff2') format('woff2');}
+@font-face{font-family:Literata;font-style:italic;font-weight:700;font-display:swap;src:url('https://fonts.wp.com/s/literata/v35/or3NQ6P12-iJxAIgLYT1PLs1Zd0nfUwAbeGVKoRYzNiCp1OUedn8GLLWTEKTt8iVow.woff2') format('woff2');}
+@font-face{font-family:Literata;font-style:italic;font-weight:800;font-display:swap;src:url('https://fonts.wp.com/s/literata/v35/or3NQ6P12-iJxAIgLYT1PLs1Zd0nfUwAbeGVKoRYzNiCp1OUedn8f7LWTEKTt8iVow.woff2') format('woff2');}
+@font-face{font-family:Literata;font-style:italic;font-weight:900;font-display:swap;src:url('https://fonts.wp.com/s/literata/v35/or3NQ6P12-iJxAIgLYT1PLs1Zd0nfUwAbeGVKoRYzNiCp1OUedn8VrLWTEKTt8iVow.woff2') format('woff2');}
+@font-face{font-family:Lora;font-style:normal;font-weight:400;font-display:swap;src:url('https://fonts.wp.com/s/lora/v32/0QI6MX1D_JOuGQbT0gvTJPa787weuyJDmKxemMeZ.woff2') format('woff2');}
+@font-face{font-family:Lora;font-style:normal;font-weight:500;font-display:swap;src:url('https://fonts.wp.com/s/lora/v32/0QI6MX1D_JOuGQbT0gvTJPa787wsuyJDmKxemMeZ.woff2') format('woff2');}
+@font-face{font-family:Lora;font-style:normal;font-weight:600;font-display:swap;src:url('https://fonts.wp.com/s/lora/v32/0QI6MX1D_JOuGQbT0gvTJPa787zAvCJDmKxemMeZ.woff2') format('woff2');}
+@font-face{font-family:Lora;font-style:normal;font-weight:700;font-display:swap;src:url('https://fonts.wp.com/s/lora/v32/0QI6MX1D_JOuGQbT0gvTJPa787z5vCJDmKxemMeZ.woff2') format('woff2');}
+@font-face{font-family:Lora;font-style:italic;font-weight:400;font-display:swap;src:url('https://fonts.wp.com/s/lora/v32/0QI8MX1D_JOuMw_hLdO6T2wV9KnW-MoFkq18ndeZzZ0.woff2') format('woff2');}
+@font-face{font-family:Lora;font-style:italic;font-weight:500;font-display:swap;src:url('https://fonts.wp.com/s/lora/v32/0QI8MX1D_JOuMw_hLdO6T2wV9KnW-PgFkq18ndeZzZ0.woff2') format('woff2');}
+@font-face{font-family:Lora;font-style:italic;font-weight:600;font-display:swap;src:url('https://fonts.wp.com/s/lora/v32/0QI8MX1D_JOuMw_hLdO6T2wV9KnW-BQCkq18ndeZzZ0.woff2') format('woff2');}
+@font-face{font-family:Lora;font-style:italic;font-weight:700;font-display:swap;src:url('https://fonts.wp.com/s/lora/v32/0QI8MX1D_JOuMw_hLdO6T2wV9KnW-C0Ckq18ndeZzZ0.woff2') format('woff2');}
 </style>
 
 <style>
@@ -403,7 +484,7 @@ var JETPACK_MU_WPCOM_SETTINGS = {"assetsUrl":"https://s1.wp.com/wp-content/mu-pl
 	}
 	</style>
 
-			<link rel="stylesheet" id="custom-css-css" type="text/css" href="https://s2.wp.com/?custom-css=1&#038;csblog=gpo7v&#038;cscache=6&#038;csrev=136" />
+			<link rel="stylesheet" id="custom-css-css" type="text/css" href="custom-style.css" />
 			
 
 			
@@ -500,6 +581,8 @@ var JETPACK_MU_WPCOM_SETTINGS = {"assetsUrl":"https://s1.wp.com/wp-content/mu-pl
             <img src="wp-content/uploads/2025/03/ariel_gonzalez-1.jpg" class="wp-image-55" />
         </figure>
     </div>
+    </div>
+</div>
 
 <div id="psykoterapi" class="full-page-container">
    <div class="therapy-section">
@@ -584,6 +667,8 @@ var JETPACK_MU_WPCOM_SETTINGS = {"assetsUrl":"https://s1.wp.com/wp-content/mu-pl
 	
 	</div>
 	</form>
+</div>
+</div>
 
 <!-- 
 

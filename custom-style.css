@@ -1,0 +1,307 @@
+/* ==========================================================================
+   Gonzalez Psykoterapi — rebuilt custom styles
+   Replaces the WordPress.com "Additional CSS" that stopped being served
+   once the Custom Design upgrade lapsed. Uses the same design tokens
+   (colors, fonts) already defined by the theme's global-styles-inline-css
+   block elsewhere in index.html.
+   ========================================================================== */
+
+/* ---------- Hero / parallax section ---------- */
+
+.landing-content {
+	position: relative;
+	margin-top: 0 !important;
+}
+
+/* The theme's default block spacing (margin-block-start: 1.5rem between
+   top-level sections) was adding a gap above the hero, on top of this
+   spacer's own height — zeroing both closes the gap between the header
+   and the picture. */
+.responsive-spacer1 {
+	height: 0;
+}
+
+.responsive-spacer2 {
+	height: 3rem;
+}
+
+.parallax-container {
+	width: 100%;
+	overflow: hidden;
+}
+
+.parallax {
+	min-height: 78vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-image: linear-gradient(rgba(2, 2, 7, 0.38), rgba(2, 2, 7, 0.38)), url('Göteborg.jpg');
+	background-size: cover;
+	background-position: center;
+	background-attachment: fixed;
+	background-repeat: no-repeat;
+}
+
+/* background-attachment: fixed is unreliable on mobile browsers */
+@media (max-width: 782px) {
+	.parallax {
+		background-attachment: scroll;
+		min-height: 60vh;
+	}
+}
+
+.parallax-text {
+	text-align: center;
+	padding: 1.5rem;
+}
+
+.ariel-title {
+	font-family: var(--wp--preset--font-family--lora);
+	color: var(--wp--preset--color--background);
+	font-size: clamp(2.875rem, 3.45rem + 2.3vw, 5.175rem);
+	font-weight: 400;
+	letter-spacing: -0.02em;
+	margin: 0;
+}
+
+.ariel-subtitle {
+	font-family: var(--wp--preset--font-family--eb-garamond);
+	font-weight: 400;
+	font-style: normal;
+	color: var(--wp--preset--color--background);
+	font-size: clamp(1.265rem, 1.15rem + 1.15vw, 1.725rem);
+	margin: 0.5rem 0 0;
+	opacity: 0.92;
+}
+
+/* ---------- Shared section layout ---------- */
+
+.full-page-container {
+	width: 100%;
+	box-sizing: border-box;
+	padding: 4rem clamp(1.5rem, 5vw, 4rem);
+	/* Fill the viewport so anchor-nav clicks (Om mig / Psykoterapi) land on a
+	   section that doesn't let the next section peek in at the bottom. */
+	min-height: 100vh;
+	min-height: 100svh;
+}
+
+.responsive-header {
+	height: 1rem;
+}
+
+.responsive-spacer-psy {
+	height: 3rem;
+}
+
+/* ---------- "Om mig" section ---------- */
+
+.about-section {
+	display: flex;
+	flex-wrap: wrap;
+	gap: clamp(2rem, 5vw, 4rem);
+	max-width: 1100px;
+	margin: 0 auto;
+	align-items: flex-start;
+}
+
+.about-section .text-content {
+	flex: 1 1 55%;
+	min-width: 280px;
+}
+
+.about-section .image-content {
+	flex: 1 1 32%;
+	min-width: 240px;
+}
+
+.om-title h2 {
+	margin-top: 0;
+}
+
+.image-content .wp-block-image {
+	margin: 0;
+}
+
+.image-content img {
+	width: 100%;
+	height: auto;
+	display: block;
+	border-radius: 4px;
+	object-fit: cover;
+}
+
+@media (max-width: 680px) {
+	.about-section {
+		/* Keep the text before the photo on narrow screens (was column-reverse,
+		   which showed the photo first). */
+		flex-direction: column;
+	}
+
+	/* .text-content/.image-content carry min-width:280px/240px so they don't
+	   get too skinny in the side-by-side row layout above this breakpoint.
+	   In the stacked column layout here, those same min-widths become a
+	   floor on each item's own width — on very narrow (phone-width) screens
+	   that floor is wider than the screen itself, forcing horizontal
+	   scroll/overflow. Let them shrink freely once stacked. */
+	.about-section .text-content,
+	.about-section .image-content {
+		min-width: 0;
+		width: 100%;
+	}
+}
+
+/* ---------- "Psykoterapi" section ---------- */
+
+.therapy-section {
+	max-width: 720px;
+	margin: 0 auto;
+}
+
+.therapy-title h2 {
+	text-align: center;
+	margin-top: 0;
+}
+
+.therapy-text p:first-child {
+	margin-top: 0;
+}
+
+/* ---------- Contact section ---------- */
+
+.is-contact-description {
+	max-width: 620px;
+	margin: 0 auto;
+}
+
+/* The Jetpack contact form block relies on the theme's grunion.css for
+   its default look (field width, spacing, colors). That file didn't seem
+   to be applying reliably in local file:// preview, so this styles the
+   form fields directly and self-contained rather than depending on that
+   external stylesheet's cascade. */
+#kontakt {
+	display: flex !important;
+	flex-direction: column !important;
+	align-items: center !important;
+	width: 100%;
+	box-sizing: border-box;
+	/* Same viewport-fill treatment as the other anchor-nav sections. */
+	min-height: 100vh;
+	min-height: 100svh;
+	justify-content: center;
+	/* #kontakt's inline style only sets padding-top/bottom, so on screens
+	   narrower than the 620px content width, the form (and everything in it)
+	   had zero side inset and ran edge-to-edge. Centered text (the heading,
+	   the description) hid this because centering leaves visual whitespace
+	   on its own — but solid elements like the white input boxes had nothing
+	   to hide behind and visibly touched both edges. Match the same
+	   responsive side padding .full-page-container already uses elsewhere. */
+	padding-left: clamp(1.5rem, 5vw, 4rem);
+	padding-right: clamp(1.5rem, 5vw, 4rem);
+}
+
+/* Force the direct wrapper div (the one holding the heading, description,
+   and form) to an explicit, narrower width instead of letting it shrink-wrap
+   to content — that's what was leaving the form pinned to the left instead
+   of centered as a block. */
+#kontakt > div {
+	width: 100% !important;
+	max-width: 620px !important;
+	box-sizing: border-box !important;
+	/* This is a direct flex child of #kontakt; flex items default to
+	   min-width:auto (sized to their content), which can stop them shrinking
+	   below that content's intrinsic width and push the page into a
+	   horizontal scroll on narrow screens. min-width:0 lets it actually
+	   shrink to fit. */
+	min-width: 0 !important;
+}
+
+#kontakt .contact-form {
+	width: 100% !important;
+	max-width: 620px !important;
+	margin-left: auto !important;
+	margin-right: auto !important;
+	box-sizing: border-box;
+}
+
+/* grunion.css (Jetpack's own stylesheet, loaded before this file) makes
+   .wp-block-jetpack-contact-form a row-wrapping flex container and gives
+   each field wrapper "flex: 0 0 100%" — flex-shrink:0 means that item is
+   never allowed to shrink below its flex-basis, and flex items also default
+   to min-width:auto (sized to their content) unless told otherwise. Pin
+   down both the flex container and the field wrappers explicitly so
+   nothing in that chain can hold its width open past the viewport at very
+   narrow sizes. */
+#kontakt .wp-block-jetpack-contact-form {
+	width: 100% !important;
+	max-width: 100% !important;
+	min-width: 0 !important;
+	box-sizing: border-box !important;
+}
+
+#kontakt .grunion-field-wrap {
+	display: block !important;
+	width: 100% !important;
+	max-width: 100% !important;
+	min-width: 0 !important;
+	flex: 0 1 100% !important;
+	box-sizing: border-box !important;
+	margin-bottom: 1.75rem;
+}
+
+#kontakt .grunion-field-label {
+	display: block;
+	font-family: var(--wp--preset--font-family--literata);
+	font-weight: 700;
+	margin-bottom: 0.5rem;
+}
+
+#kontakt .grunion-label-required {
+	display: inline-block;
+	margin-left: 0.4em;
+	font-weight: 400;
+	font-size: 0.85em;
+	opacity: 0.65;
+}
+
+#kontakt input.grunion-field,
+#kontakt textarea.grunion-field {
+	display: block !important;
+	width: 100% !important;
+	max-width: 100% !important;
+	min-width: 0 !important;
+	box-sizing: border-box !important;
+	background-color: #ffffff !important;
+	border: 1px solid #c9c4bb !important;
+	border-radius: 6px;
+	padding: 0.85rem 1rem !important;
+	font-family: var(--wp--preset--font-family--eb-garamond);
+	font-size: 1rem;
+	color: var(--wp--preset--color--foreground);
+}
+
+/* The "Beskriv kort..." textarea has rows="20" in the HTML, which sets its
+   own intrinsic height regardless of window size (that's the "huge on a
+   small screen" bug). An explicit height here overrides that HTML sizing
+   and scales down for narrow windows instead; resize:vertical still lets
+   visitors drag it taller if they want more room. */
+#kontakt textarea.grunion-field {
+	height: 220px;
+	resize: vertical;
+}
+
+@media (max-width: 480px) {
+	#kontakt textarea.grunion-field {
+		height: 140px;
+	}
+}
+
+#kontakt input.grunion-field:focus,
+#kontakt textarea.grunion-field:focus {
+	outline: none;
+	border-color: var(--wp--preset--color--primary) !important;
+}
+
+#kontakt .wp-block-jetpack-button {
+	margin-top: 0.5rem;
+}
